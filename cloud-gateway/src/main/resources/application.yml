@@ -1,0 +1,45 @@
+server:
+  port: 9090
+ 
+ 
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+      - id: MANAGER-SERVICE
+        uri: lb://MANAGER-SERVICE
+        predicates:
+        - Path=/api/manager/** 
+      - id: CUSTOMER-SERVICE
+        uri: lb://CUSTOMER-SERVICE
+        predicates:
+        - Path=/api/customer/**   
+      - id: ACCOUNT-SERVICE
+        uri: lb://ACCOUNT-SERVICE
+        predicates:
+        - Path=/account/**
+      - id: TRANSACTION-SERVICE
+        uri: lb://TRANSACTION-SERVICE
+        predicates:
+        - Path=/transaction/** 
+      - id: REPORTS-SERVICE
+        uri: lb://REPORTS-SERVICE
+        predicates:
+        - Path=/report/**          
+      discovery:
+        locator: 
+          lower-case-service-id: true
+       
+    
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+      
+
+    
+    
